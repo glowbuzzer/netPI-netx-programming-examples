@@ -4,7 +4,7 @@ FROM resin/rpi-raspbian:jessie-20170531
 #set prerequisites to compile ARM code on x86 machines during automated build
 ENV QEMU_EXECVE 1
 COPY armv7hf-debian-qemu /usr/bin
-# RUN [ "cross-build-start" ]
+RUN [ "cross-build-start" ]
 
 USER root
 
@@ -69,4 +69,4 @@ EXPOSE 22
 #the entrypoint shall start ssh
 ENTRYPOINT ["/usr/sbin/sshd", "-D"]
 
-# RUN [ "cross-build-end" ]
+RUN [ "cross-build-end" ]
