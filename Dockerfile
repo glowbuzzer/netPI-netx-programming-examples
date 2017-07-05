@@ -50,10 +50,7 @@ COPY files-to-copy-to-image/includes/PacketHandlerPNS.h includes/
 COPY files-to-copy-to-image/includes/PacketHandlerEIS.h includes/
 
 #copy the device description files such as GSDML, EDS
-COPY "devicedescriptions/PROFINET/GSDML-011E-0115-NETX51REPNS.bmp" "devicedescriptions/PROFINET/"
-COPY "devicedescriptions/PROFINET/GSDML-011E-0115-NETX51REPNS.ico "devicedescriptions/PROFINET/"
-COPY "devicedescriptions/PROFINET/GSDML-V2.33-HILSCHER-NETX 51-RE PNS-20170216.xml" "devicedescriptions/PROFINET/"
-
+COPY devicedescriptions/PROFINET/* devicedescriptions/PROFINET/
 COPY devicedescriptions/EtherNetIP/* devicedescriptions/EtherNetIP/
 
 #copy the makefile and the application source codes
