@@ -45,24 +45,25 @@ Pulling the image from Docker Hub may take up to 5 minutes.
 
 #### Accessing
 
-After the container has been started login to it with a SSH client such as [putty](http://www.putty.org/) using the netPI's IP address along with the mapped SSH port. Use the credentials `pi` as user and `raspberry` as password when asked.
+After the container has been started login to it with a SSH client such as [putty](http://www.putty.org/) using the netPI's IP address along with the mapped SSH port. Use the credentials `pi` as user and `raspberry` as password when asked and you are logged in as a non-root user `pi`.
 
 ##### The programming example files and folders
 
-After the login you will be directed to the pi user's home directory /home/pi with following structure
+The login directs you to the user's home directory /home/pi with following structure
 
 ```
 /home/pi/
        |
-       +--/devicedescriptions   - device description files such as EDS, GSDML
-       +--/manuals              - common cifX API manual and protocol specific API manuals
-       +--/includes             - protocol specific include files for compilation
-       +--/sources              - protocol specific source codes of the demos
+       +--/devicedescriptions   - device description files such as EDS, GSDML needed for master engineering
        +--/driver               - netX driver installation package
        +--/firmwares            - netX firmware installation packages
-       | Makefile               - Makefile to compile demo applications using 'make' command
-       | PNS_simpleConfig       - precompiled PROFINET example executable
-       | EIS_simpleConfig       - precompiled EtherNet/IP example executable
+       +--/includes             - protocol specific include files for compilation
+       +--/manuals              - common cifX API manual and protocol specific API manuals
+       +--/objs                 - folder where the object files of the compilation process are stored to
+       +--/sources              - protocol specific source codes of the demos
+       | Makefile               - Makefile to compile example applications using 'make' command
+       | PNS_simpleConfig       - precompiled and executable PROFINET example 
+       | EIS_simpleConfig       - precompiled and executable EtherNet/IP example
 ```
 ##### netX driver installation
 
@@ -72,47 +73,54 @@ To install the netX SPI driver package move to the `driver` folder and call
 
 The driver will be installed into the folder `/opt/cifx`. 
 
-The cifX API function library needed for linking will be installed into folder `/usr/lib`. Basic include files needed for compilations will be installed into folder `/usr/include`.
+The cifX API function library needed for linking will be installed into folder `/usr/lib`. 
+
+Basic include files needed for the compilation process will be installed into folder `/usr/include`.
 
 ##### netX firmware installation
 
 To install a firmware package move to the folder `firmwares` and call
 
-`dpkg -i netpi-pns-3.12.0.2.deb` for PROFINET IO device firmware    
+* `dpkg -i netpi-pns-3.12.0.2.deb` for PROFINET IO device firmware    
+* `dpkg -i netpi-eis-2.12.5.0.deb` for EtherNet/IP adapter firmware
 
-or
+Any firmware package extracts its firmware into the folder `/opt/cifx/deviceconfig/FW/channel0`. 
 
-`dpkg -i netpi-eis-2.12.5.0.deb` for EtherNet/IP adapter firmware
+The firmware will be loaded by the driver into netX the next time the driver is accessed with `cifXDriverInit()` command.
 
-A firmware package extracts its firmware into the folder `/opt/cifx/deviceconfig/FW/channel0`. 
-
-The firmware will be loaded automatically by the driver into netX the next time the driver is started.
-
-There can be one installed firmware package at a time. During installation an existing package will be automatically uninstalled.
+There can be only one installed firmware package at a time. An existing package will be automatically uninstalled during installation.
 
 ##### Compiling the programming examples
 
-To compile the programming examples simply call `make` in the pi home directory. The command will locate the `Makefile` which initiates the compilation process.
+To compile the programming examples simply call `make` in the pi home directory. The command will locate the `Makefile` which initiates the compilation process and checks the depencencies.
 
 The following executables will be compiled
 
 * `PNS_simpleConfig` as PROFINET IO device demo
 * `EIS_simpleConfig` as EtherNet/IP adapter demo
 
+You may be faced with the following warning during compilation process
+
+`make: warning:  Clock skew detected.  Your build may be incomplete.`
+
+There is a discrepancy between netPI's system clock and the time the executeables/object files have been generated. Call `make clean` and remove the executeable. Then start the compilation process again. Make also sure you have set netPI's system clock correctly.
+
 ##### Starting the executables
 
 To start the compiled examples call the following executeables in the pi home directory
 
-* `./PNS_simpleConfig` for the PROFINET IO device demo
-* `./EIS_simpleConfig` for the EtherNet/IP adapter demo
+* `sudo ./PNS_simpleConfig` for the PROFINET IO device example
+* `sudo ./EIS_simpleConfig` for the EtherNet/IP adapter example
+
+The examples check if the corresponding firmware package has been installed properly, if not they install it automatically.
 
 ##### Linking the cifX library to applications
 
-To link the cifX driver library to your own applications at later times just add the option `-lcifx` to your GCC compilation command or in your Makefile.
+To link the cifX driver library to own applications at later times just add the option `-lcifx` to your GCC compilation command or in your makefile.
 
 ##### The cifX API reference (netX driver API)
 
-The cifX driver API is described in the manual 
+The cifX driver function API is described in the manual 
 
 `cifX_API_PR_04_EN.pdf` 
 
@@ -120,9 +128,9 @@ located in the `manuals` folder.
 
 ##### The protocol specific APIs (PROFINET, EtherNet/IP ... APIs)
 
-Each netX firmware has protocol dependent characteristics. Particularly the configuration varies from protocol to protocol.
+A netX firmware has a common part that is behaving the same for all firmwares and a protocol dependent specific part. Particularly the configuration varies from protocol to protocol and shows different characteristics.
 
-The protocol specific APIs are described in these manuals
+The protocol specific dependencies are described in these manuals
 
 * `PROFINET_IO-Device_V3.12_Protocol_API_17_EN.pdf` for PROFINET IO device 
 * `EtherNetIP_Adapter_Protocol_API_19_EN.pdf` for EtherNet/IP adapter
