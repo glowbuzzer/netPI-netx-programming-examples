@@ -27,7 +27,11 @@ RUN apt-get update  \
 #create needed folders
 RUN mkdir /home/pi/manuals /home/pi/firmwares /home/pi/driver /home/pi/includes /home/pi/sources \
           /home/pi/includes/EtherNetIP /home/pi/includes/PROFINET /home/pi/includes/EtherCAT \
-          /home/pi/devicedescriptions/ /home/pi/devicedescriptions/PROFINET /home/pi/devicedescriptions/EtherNetIP /home/pi/objs
+          /home/pi/devicedescriptions/ \
+          /home/pi/devicedescriptions/PROFINET \
+          /home/pi/devicedescriptions/EtherNetIP \
+          /home/pi/devicedescriptions/EtherCAT \
+          /home/pi/objs
 
 #set the working directory
 WORKDIR /home/pi
@@ -42,16 +46,19 @@ COPY files-to-copy-to-image/firmwares/* firmwares/
 COPY files-to-copy-to-image/driver/* driver/
 
 #copy the include files
+COPY files-to-copy-to-image/includes/EtherCAT/* includes/EtherCAT/
 COPY files-to-copy-to-image/includes/EtherNetIP/* includes/EtherNetIP/
 COPY files-to-copy-to-image/includes/PROFINET/* includes/PROFINET/
 COPY files-to-copy-to-image/includes/SystemPackets.h includes/
 COPY files-to-copy-to-image/includes/App.h includes/
 COPY files-to-copy-to-image/includes/PacketHandlerPNS.h includes/
 COPY files-to-copy-to-image/includes/PacketHandlerEIS.h includes/
+COPY files-to-copy-to-image/includes/PacketHandlerECS.h includes/
 
 #copy the device description files such as GSDML, EDS
 COPY devicedescriptions/PROFINET/* devicedescriptions/PROFINET/
 COPY devicedescriptions/EtherNetIP/* devicedescriptions/EtherNetIP/
+COPY devicedescriptions/EtherCAT/* devicedescriptions/EtherCAT/
 
 #copy the makefile and the application source codes
 COPY files-to-copy-to-image/Makefile ./
