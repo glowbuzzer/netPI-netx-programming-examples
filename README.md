@@ -12,6 +12,7 @@ Additionally the image provides netX programming examples in source code and as 
 
 * PROFINET IO device 
 * EtherNet/IP adapter
+* EtherCAT Slave
 
 #### Container prerequisites
 
@@ -62,8 +63,9 @@ The login directs you to the user's home directory /home/pi with following struc
        +--/objs                 - folder where the object files of the compilation process are stored to
        +--/sources              - protocol specific source codes of the demos
        | Makefile               - Makefile to compile example applications using 'make' command
-       | PNS_simpleConfig       - precompiled and executable PROFINET example 
-       | EIS_simpleConfig       - precompiled and executable EtherNet/IP example
+       | PNS_simpleConfig       - precompiled and executable PROFINET IO device example 
+       | EIS_simpleConfig       - precompiled and executable EtherNet/IP adapter example
+       | ECS_simpleConfig       - precompiled and executable EtherCAT slave example
 ```
 ##### netX driver installation
 
@@ -83,6 +85,7 @@ To install a firmware package move to the folder `firmwares` and call
 
 * `dpkg -i netpi-pns-3.12.0.2.deb` for PROFINET IO device firmware    
 * `dpkg -i netpi-eis-2.12.5.0.deb` for EtherNet/IP adapter firmware
+* `dpkg -i netpi-eCs-4.7.0.2.deb` for EtherCAT slave firmware
 
 Any firmware package extracts its firmware into the folder `/opt/cifx/deviceconfig/FW/channel0`. 
 
@@ -98,6 +101,7 @@ The following executables will be compiled
 
 * `PNS_simpleConfig` as PROFINET IO device demo
 * `EIS_simpleConfig` as EtherNet/IP adapter demo
+* `ECS_simpleConfig` as EtherCAT slave demo
 
 You may be faced with the following warning during compilation process
 
@@ -111,6 +115,7 @@ To start the compiled examples call the following executeables in the pi home di
 
 * `sudo ./PNS_simpleConfig` for the PROFINET IO device example
 * `sudo ./EIS_simpleConfig` for the EtherNet/IP adapter example
+* `sudo ./EES_simpleConfig` for the EtherCAT slave example
 
 The examples check if the corresponding firmware package has been installed properly, if not they install it automatically.
 
@@ -134,6 +139,7 @@ The protocol specific dependencies are described in these manuals
 
 * `PROFINET_IO-Device_V3.12_Protocol_API_17_EN.pdf` for PROFINET IO device 
 * `EtherNetIP_Adapter_Protocol_API_19_EN.pdf` for EtherNet/IP adapter
+* `EtherCAT Slave V4 Protocol API 09 EN.pdf` for EtherCAT slave
 
 located in the `manuals` folder.
 
