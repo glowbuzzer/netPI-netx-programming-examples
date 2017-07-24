@@ -17,7 +17,7 @@ Exclusion of Liability for this demo software:
 Copyright (c) Hilscher Gesellschaft fuer Systemautomation mbH. All Rights Reserved.
 
 ***************************************************************************************
-  $Id: PacketHandlerXXX.h 2458 2017-01-13 11:18:07Z Jin $:
+  $Id: PacketHandlerEIS.h 2458 2017-01-13 11:18:07Z Jin $:
 
   Description:
     Protocol PacketHandler header file
@@ -30,13 +30,13 @@ Copyright (c) Hilscher Gesellschaft fuer Systemautomation mbH. All Rights Reserv
 **************************************************************************************/
 
 /*****************************************************************************/
-/*! \file PacketHandlerXXX.h
+/*! \file PacketHandlerEIS.h
 *   Protocol PacketHandler header file                                       */
 /*****************************************************************************/
 
-#ifndef COMPONENTS_CIFXAPPLICATIONDEMOXXX_INCLUDES_PACKETHANDLERXXX_H_
-#define COMPONENTS_CIFXAPPLICATIONDEMOXXX_INCLUDES_PACKETHANDLERXXX_H_
+#ifndef COMPONENTS_CIFXAPPLICATIONDEMOEIS_INCLUDES_PACKETHANDLEREIS_H_
+#define COMPONENTS_CIFXAPPLICATIONDEMOEIS_INCLUDES_PACKETHANDLEREIS_H_
 
 #define TX_TIMEOUT_EIS 1000
 
-#endif /* COMPONENTS_CIFXAPPLICATIONDEMOXXX_INCLUDES_PACKETHANDLERXXX_H_ */
+#endif /* COMPONENTS_CIFXAPPLICATIONDEMOEIS_INCLUDES_PACKETHANDLEREIS_H_ */
