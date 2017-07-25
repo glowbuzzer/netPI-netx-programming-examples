@@ -8,7 +8,7 @@
     $Workfile: EIS_simpleConfig.c $
    Last Modification:
     $Author : AB$
-    $Modtime: 05.07.17 15:45 $
+    $Modtime: 25.07.17 15:45 $
     $Revision$
 
    Targets:
@@ -27,6 +27,7 @@
 
      Version   Date        Author   Description
      ----------------------------------------------------------------------------------
+      5        25.07.2017  AB       - checking if root
       4        16.06.2017  AB       - added EtherNet/IP adapter PacketHandlerEIS.c example 
                                       from team netX support to demo
       3        08.11.2011  SD       - support of new initialization parameter (card number)
@@ -899,6 +900,12 @@ int main(int argc, char* argv[])
 	printf("%s() called\n", __FUNCTION__);
 #endif
 
+  if(geteuid() != 0)
+  {
+    printf("Program did not run as root. Exiting now.\n");
+    return(-1);
+  }
+	
   printf("\nThis demo application demonstrates the use of the socalled cifX API (netX driver API).\n\n");
   printf("It configures the netX as EtherNet/IP adapter in the length of 10 bytes consume and 4 bytes produce data.\n\n");
   printf("An EtherNet/IP controller addresses the adapter over its IP address.\n");
