@@ -25,6 +25,7 @@
 
      Version   Date        Author   Description
      ----------------------------------------------------------------------------------
+      5        25.07.2017  AB       - checking if root
       4        16.07.2017  AB       - added EtherCAT slave PacketHandlerECS.c example 
                                       from team netX support to demo
       3        08.11.2011  SD       - support of new initialization parameter (card number)
@@ -897,6 +898,13 @@ int main(int argc, char* argv[])
 	printf("%s() called\n", __FUNCTION__);
 #endif
 
+  if(geteuid() != 0)
+  {
+    printf("Program did not run as root. Exiting now.\n");
+    return(-1);
+  }
+
+	
   printf("\nThis demo application demonstrates the use of the socalled cifX API (netX driver API).\n\n");
   printf("It configures the netX as EtherCAT slave in the length of 10 bytes input and 4 bytes output data.\n\n");
   printf("\nPress any key to start the demo.\n");
@@ -915,9 +923,9 @@ int main(int argc, char* argv[])
     }
   }
 
-  /* check if the EtherNet/IP adapter has been installed properly on the system, else install its package */
+  /* check if the EtherCAT slave has been installed properly on the system, else install its package */
   while( (lRet = stat("/opt/cifx/deviceconfig/FW/channel0/R160F000.nxf",&buffer)) != 0) {
-    printf("\nThe EtherNet/IP adapter firmware has not been found installed.\n");
+    printf("\nThe EtherCAT slave firmware has not been found installed.\n");
     printf("Installing the firmware now.\n");
     if( system("dpkg -i ./firmwares/netpi-ecs-4.7.0.2.deb") == -1) {
       printf("Installing the firmware failed. Check if firmware 'netpi-ecs-4.7.0.2.deb' package is located in folder './firmwares'(relative path to demo app).\n");
